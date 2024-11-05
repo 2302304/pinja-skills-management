@@ -1,28 +1,26 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Navigation from './components/Navigation'; // Tämä lisätään myöhemmin
-import SearchBar from './components/SearchBar'; // Tämä lisätään myöhemmin
-import ConsultantList from './components/ConsultantList'; // Tämä lisätään myöhemmin
-import ConsultantProfile from './components/ConsultantProfile'; // Tämä lisätään myöhemmin
+import React, { useState } from 'react';
+import Navigation from './components/Navigation';
+import ConsultantList from './components/ConsultantList';
+import SearchBar from './components/SearchBar';
+import ConsultantProfile from './components/ConsultantProfile';
 import './App.css';
 
 function App() {
-  return (
-    <Router>
-      <div className="App">
-        {/* Navigointipalkki */}
-        <Navigation />
+  const [view, setView] = useState("home"); // Tilanhallinta näkymälle
 
-        <div className="content">
-          {/* Reititys eri sivuille */}
-          <Routes>
-            <Route path="/" element={<ConsultantList />} />
-            <Route path="/search" element={<SearchBar />} />
-            <Route path="/profile/:id" element={<ConsultantProfile />} />
-          </Routes>
-        </div>
+  return (
+    <div className="App">
+      {/* Navigointipalkki */}
+      <Navigation setView={setView} />
+
+      <div className="content">
+        {/* Näytettävän näkymän valinta view-tilan perusteella */}
+        {view === "home" && <h2>Tervetuloa Pinja Skills Management -sovellukseen!</h2>}
+        {view === "consultants" && <ConsultantList />}
+        {view === "search" && <SearchBar />}
+        {view === "profile" && <ConsultantProfile />}
       </div>
-    </Router>
+    </div>
   );
 }
 
